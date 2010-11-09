@@ -52,8 +52,11 @@ public class HBaseScheme extends Scheme
   /** Field valueFields */
   private Fields[] valueFields;
 
+  private String[] qualifiedHBaseColumns = null;
+
   /** String columns */
   private transient String[] columns;
+
   /** Field fields */
   private transient byte[][] fields;
 
@@ -86,6 +89,36 @@ public class HBaseScheme extends Scheme
     setSourceSink( this.keyField, this.valueFields );
 
     validate();
+    }
+
+  /**
+   * Constructor HBaseScheme creates a new HBaseScheme instance.
+   *
+   * @param keyField   of type Fields
+   * @param valueFields of type Fields[]
+   * @param qualifiedHBaseColumns of type String[]
+   */
+  public HBaseScheme( Fields keyField, Fields[] valueFields, String[] qualifiedHBaseColumns )
+    {
+    this.keyField = keyField;
+    this.valueFields = valueFields;
+    this.qualifiedHBaseColumns = qualifiedHBaseColumns;
+
+    setSourceSink( this.keyField, this.valueFields );
+
+    validate();
+    }
+
+    /**
+     * Constructor HBaseScheme creates a new HBaseScheme instance.
+     *
+     * @param keyField   of type Fields
+     * @param valueFields of type Fields
+     * @param qualifiedHBaseColumns of type String[]
+     */
+    public HBaseScheme( Fields keyField, Fields valueFields, String[] qualifiedHBaseColumns )
+    {
+    this( keyField, Fields.fields( valueFields ), qualifiedHBaseColumns );
     }
 
   /**
@@ -198,19 +231,23 @@ public class HBaseScheme extends Scheme
       Fields fieldSelector = valueFields[ i ];
       TupleEntry values = tupleEntry.selectEntry( fieldSelector );
 
+      Fields fields = values.getFields();
+      Tuple tuple = values.getTuple();
       for( int j = 0; j < values.getFields().size(); j++ )
         {
-        Fields fields = values.getFields();
-        Tuple tuple = values.getTuple();
 
         String value = tuple.getString( j );
-
         byte[] asBytes = value == null ? null : Bytes.toBytes( value );
 
-        if( familyNames == null )
-          batchUpdate.put( hbaseColumn( fields.get( j ).toString() ), asBytes );
+        String column;
+        if ( qualifiedHBaseColumns != null )
+          column = hbaseColumn( qualifiedHBaseColumns[j] );
+        else if( familyNames == null )
+          column = hbaseColumn( fields.get( j ).toString() );
         else
-          batchUpdate.put( hbaseColumn( familyNames[ i ] ) + fields.get( j ).toString(), asBytes );
+          column = hbaseColumn( familyNames[ i ] ) + fields.get( j ).toString();
+
+        batchUpdate.put( column, asBytes );
         }
       }
 
@@ -244,6 +281,11 @@ public class HBaseScheme extends Scheme
     {
     if( columns != null )
       return columns;
+
+    if (qualifiedHBaseColumns != null) {
+      columns = qualifiedHBaseColumns;
+      return columns;
+    }
 
     int size = 0;
 

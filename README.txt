@@ -1,6 +1,7 @@
 
 Current Fork:
 This fork includes an update for lein-javac 1.2.1, cascading 1.1.3, hbase 0.20.6.
+Also added an HBaseScheme feature to support mapping of fields to arbitrary hbase family:columns.
 
 Original Fork note:
 This fork adds some simple leiningen interop stuff. Most of it centered around
