@@ -1,8 +1,8 @@
 (defproject org.clojars.ndimiduk/cascading.hbase "0.0.1-dev"
   :description "FIXME: write"
   :dependencies [[org.apache.hadoop/hadoop-core "0.20.2-dev"]
-		 [org.clojars.ndimiduk/hbase "0.20.2"]
-		 [cascading "1.0.17-SNAPSHOT"]]
-  :dev-dependencies [[lein-javac "0.0.2-SNAPSHOT"]]
+		 [org.clojars.ndimiduk/hbase "0.20.6"]
+     [cascading1.1 "1.1.3-SNAPSHOT"]]
+  :dev-dependencies [[lein-javac "1.2.1-SNAPSHOT"]]
   :java-source-path "src/java"
   :javac-fork "true")

@@ -1,14 +1,19 @@
+
+Current Fork:
+This fork includes an update for lein-javac 1.2.1, cascading 1.1.3, hbase 0.20.6.
+
+Original Fork note:
 This fork adds some simple leiningen interop stuff. Most of it centered around
 dependency management and such. I'll eventually create the necessary pom files
 and push all this stuff to clojars, but until then, you get a script.
 
 installation
 
-1. download hbase-0.20.0 release and extract it somewhere
+1. download hbase-0.20.6 release and extract it somewhere
 2. run deploy-deps.sh to install jars into your local mvn repo
 $ HBASE_HOME=/path/to/hbase sh deploy-deps.sh
 3. install deps locally (assuming 3 worked): lein deps
-4. compile and jar: lein compile-java ; lein jar
+4. compile and jar: lein javac ; lein jar
 5. install to your local repo: lein install
 
 using

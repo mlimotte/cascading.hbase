@@ -18,13 +18,14 @@ fi
 HBASE_LIBDIR=$HBASE_HOME/lib
 
 # HBase
-mvn deploy:deploy-file -Dfile=$HBASE_HOME/hbase-0.20.2.jar \
-	-DpomFile=./hbase-0.20.2.pom -Durl=$REPOSITORY_URL
+mvn deploy:deploy-file -Dfile=$HBASE_HOME/hbase-0.20.6.jar \
+	-DpomFile=./hbase-0.20.6.pom -Durl=$REPOSITORY_URL
 
 # AgileJSON
-mvn deploy:deploy-file -DgroupId=org.clojars.ndimiduk -DartifactId=AgileJSON \
-    -Dversion=2009-03-30 -Dpackaging=jar -Durl=$REPOSITORY_URL \
-    -Dfile=$HBASE_LIBDIR/AgileJSON-2009-03-30.jar
+# Not in hbase 0.20.6
+#mvn deploy:deploy-file -DgroupId=org.clojars.ndimiduk -DartifactId=AgileJSON \
+#    -Dversion=2009-03-30 -Dpackaging=jar -Durl=$REPOSITORY_URL \
+#    -Dfile=$HBASE_LIBDIR/AgileJSON-2009-03-30.jar
 
 # commons cli
 #mvn deploy:deploy-file -DgroupId=org.clojars.ndimiduk \
@@ -46,7 +47,7 @@ mvn deploy:deploy-file -DgroupId=org.clojars.ndimiduk -DartifactId=thrift \
 
 # zookeeper
 mvn deploy:deploy-file -DgroupId=org.clojars.ndimiduk -DartifactId=zookeeper \
-	-Dversion=3.2.1 -Dpackaging=jar -Durl=$REPOSITORY_URL \
-	-Dfile=$HBASE_LIBDIR/zookeeper-3.2.1.jar
+	-Dversion=3.2.2 -Dpackaging=jar -Durl=$REPOSITORY_URL \
+	-Dfile=$HBASE_LIBDIR/zookeeper-3.2.2.jar
 
 # EOF

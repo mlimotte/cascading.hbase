@@ -5,18 +5,20 @@
   <groupId>org.clojars.ndimiduk</groupId>
   <artifactId>hbase</artifactId>
   <packaging>jar</packaging>
-  <version>0.20.2</version>
+  <version>0.20.6</version>
 
   <name>Hadoop HBase</name>
 
   <dependencies>
 
     <!-- local install -->
+<!--
     <dependency>
       <groupId>org.clojars.ndimiduk</groupId>
       <artifactId>AgileJSON</artifactId>
       <version>2009-03-30</version>
     </dependency>
+-->
 
     <!-- local install -->
     <dependency>
@@ -92,11 +94,13 @@
       <version>1.2.0</version>
     </dependency>
 
+<!--
     <dependency>
       <groupId>org.json</groupId>
       <artifactId>json</artifactId>
       <version>20090211</version>
     </dependency>
+-->
 
     <!-- local install -->
     <dependency>
@@ -145,7 +149,7 @@
     <dependency>
       <groupId>org.clojars.ndimiduk</groupId>
       <artifactId>zookeeper</artifactId>
-      <version>3.2.1</version>
+      <version>3.2.2</version>
     </dependency>
 
   </dependencies>

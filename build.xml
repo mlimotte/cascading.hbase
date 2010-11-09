@@ -20,7 +20,7 @@
 
   <property file="${basedir}/version.properties"/>
 
-  <property name="cascading.hbase.version" value="x.y.z"/>
+  <property name="cascading.hbase.version" value="0.0.1-dev"/>
 
   <!-- these are optional, only used if you uncomment the project.class.path filesets below -->
   <property name="hadoop.home" location="${basedir}/../hadoop"/>
@@ -33,7 +33,7 @@
   <!-- assumes Cascading shares the same parent directory, change if necessary -->
   <property name="cascading.home" location="${basedir}/../cascading"/>
   <property file="${cascading.home}/version.properties"/>
-  <property name="cascading.release.version" value="x.y.z"/>
+  <property name="cascading.release.version" value="1.1.3"/>
   <property name="cascading.filename.core" value="cascading-core-${cascading.release.version}.jar"/>
   <property name="cascading.filename.xml" value="cascading-xml-${cascading.release.version}.jar"/>
   <property name="cascading.libs" value="${cascading.home}/lib"/>

@@ -7,3 +7,4 @@ classes
 *.iws
 *.ipr
 build.properties
+pom.xml
