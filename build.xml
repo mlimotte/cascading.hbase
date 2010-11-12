@@ -20,7 +20,7 @@
 
   <property file="${basedir}/version.properties"/>
 
-  <property name="cascading.hbase.version" value="0.0.2-dev"/>
+  <property name="cascading.hbase.version" value="0.0.3-dev"/>
 
   <!-- these are optional, only used if you uncomment the project.class.path filesets below -->
   <property name="hadoop.home" location="${basedir}/../hadoop"/>

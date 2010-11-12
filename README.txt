@@ -8,16 +8,17 @@ This fork adds some simple leiningen interop stuff. Most of it centered around
 dependency management and such. I'll eventually create the necessary pom files
 and push all this stuff to clojars, but until then, you get a script.
 
-installation
+Installation with leiningen
+(Alternatively, you can build with ant, see below, and manage your own dependencies)
 
-1. download hbase-0.20.6 release and extract it somewhere
-2. run deploy-deps.sh to install jars into your local mvn repo
-$ HBASE_HOME=/path/to/hbase sh deploy-deps.sh
-3. install deps locally (assuming 3 worked): lein deps
-4. compile and jar: lein javac ; lein jar
-5. install to your local repo: lein install
+ 1. download hbase-0.20.6 release and extract it somewhere
+ 2. run deploy-deps.sh to install jars into your local mvn repo
+ $ HBASE_HOME=/path/to/hbase sh deploy-deps.sh
+ 3. install deps locally (assuming 3 worked): lein deps
+ 4. compile and jar: lein javac ; lein jar
+ 5. install to your local repo: lein install
 
-using
+Using
 
 If all that worked okay, you can now include cascading.hbase as a project dep
 
@@ -49,7 +50,7 @@ Building
  This release requires at least Cascading 1.0.1. Hadoop 0.19.x,
  and the related HBase release.
 
- To build a jar,
+ To build a jar (if not using the leiningen instructions above),
 
  > ant -Dcascading.home=... -Dhadoop.home=... -Dhbase.home=... jar
 
