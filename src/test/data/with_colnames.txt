@@ -1,0 +1,6 @@
+1 upperX A lowerX a
+1 upperY B lowerY b
+1 upperZ C lowerZ c
+2 upperX A lowerX a
+2 upperY B lowerY b
+2 upperY C lowerY c

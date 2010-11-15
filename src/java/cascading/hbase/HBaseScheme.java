@@ -52,6 +52,8 @@ public class HBaseScheme extends Scheme
   /** Field valueFields */
   private Fields[] valueFields;
 
+  private Fields[] hBaseColumnNameFields = null;
+
   private String[] qualifiedHBaseColumns = null;
 
   /** String columns */
@@ -116,9 +118,33 @@ public class HBaseScheme extends Scheme
      * @param valueFields of type Fields
      * @param qualifiedHBaseColumns of type String[]
      */
-    public HBaseScheme( Fields keyField, Fields valueFields, String[] qualifiedHBaseColumns )
+  public HBaseScheme( Fields keyField, Fields valueFields, String[] qualifiedHBaseColumns )
     {
     this( keyField, Fields.fields( valueFields ), qualifiedHBaseColumns );
+    }
+
+    /**
+     * Constructor HBaseScheme creates a new HBaseScheme instance.
+     *
+     * TODO: Haven't fully investigate, but the order of the fields coming into the sink tap seems to be relevant,
+     * even though the columns are specified by name.  Put column field last in the tuple.  Will need to think
+     * of a better way-- this is too fragile.
+     *
+     * @param keyField   of type Fields
+     * @param valueFields of type Fields
+     * @param familyName - The family name for all of the column names in hBaseColumnNameFields
+     * @param hBaseColumnNameFields of type String[]
+     */
+  public HBaseScheme( Fields keyField, Fields valueFields, String familyName, Fields hBaseColumnNameFields )
+    {
+      this.keyField = keyField;
+      this.valueFields = Fields.fields( valueFields );
+      this.familyNames = new String[] { hbaseColumn(familyName) };
+      this.hBaseColumnNameFields = Fields.fields( hBaseColumnNameFields );
+
+      setSourceSink( this.keyField, this.valueFields, this.hBaseColumnNameFields );
+
+      validate();
     }
 
   /**
@@ -160,6 +186,16 @@ public class HBaseScheme extends Scheme
 
     if( columnFields.length != 0 )
       allFields = Fields.join( keyFields, Fields.join( columnFields ) ); // prepend
+
+    setSourceFields( allFields );
+    setSinkFields( allFields );
+    }
+
+  private void setSourceSink( Fields keyFields, Fields[] valueFields , Fields[] columnFields )
+    {
+    Fields allFields = keyFields;
+
+    allFields = Fields.join( keyFields, Fields.join( valueFields ), Fields.join( columnFields ) ); // prepend
 
     setSourceFields( allFields );
     setSinkFields( allFields );
@@ -240,8 +276,13 @@ public class HBaseScheme extends Scheme
         byte[] asBytes = value == null ? null : Bytes.toBytes( value );
 
         String column;
-        if ( qualifiedHBaseColumns != null )
-          column = hbaseColumn( qualifiedHBaseColumns[j] );
+        if ( hBaseColumnNameFields != null )
+          {
+          Tuple col = tupleEntry.selectTuple( hBaseColumnNameFields[i] );
+          column = familyNames[i] + col.getString( j );
+          }
+        else if ( qualifiedHBaseColumns != null )
+          column = hbaseColumn( qualifiedHBaseColumns[i] );
         else if( familyNames == null )
           column = hbaseColumn( fields.get( j ).toString() );
         else
@@ -285,6 +326,10 @@ public class HBaseScheme extends Scheme
     if (qualifiedHBaseColumns != null) {
       columns = qualifiedHBaseColumns;
       return columns;
+    }
+
+    if (hBaseColumnNameFields != null) {
+      throw new IllegalStateException("Can not determine column names when tuple field is used to specify the column.");
     }
 
     int size = 0;

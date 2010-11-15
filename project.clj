@@ -1,4 +1,4 @@
-(defproject org.clojars.ndimiduk/cascading.hbase "0.0.3-dev"
+(defproject org.clojars.ndimiduk/cascading.hbase "0.1.2"
   :description "FIXME: write"
   :dependencies [[org.apache.hadoop/hadoop-core "0.20.2-dev"]
 		 [org.clojars.ndimiduk/hbase "0.20.6"]

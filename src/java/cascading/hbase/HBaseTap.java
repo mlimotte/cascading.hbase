@@ -156,8 +156,10 @@ public class HBaseTap extends Tap
 
     String[] familyNames = ( (HBaseScheme) getScheme() ).getFamilyNames();
 
-    for( String familyName : familyNames )
+    for( String familyName : familyNames ) {
+      // familyName must end in ':'
       tableDescriptor.addFamily( new HColumnDescriptor( familyName ) );
+    }
 
     hBaseAdmin.createTable( tableDescriptor );
 
